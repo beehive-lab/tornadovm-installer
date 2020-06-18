@@ -26,6 +26,15 @@ To use TornadoVM with OpenJDK 8:
 ```
 
 
+To build TornadoVM with GraalVM and JDK 8:
+
+
+```bash
+./install-tornadovm-graalvm8.sh
+# and follow instructions
+```
+
+
 To build TornadoVM with GraalVM and JDK 11:
 
 
