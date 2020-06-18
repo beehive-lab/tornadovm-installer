@@ -14,8 +14,9 @@ Scripts to install [TornadoVM](https://github.com/beehive-lab/TornadoVM/)
 
 ### How to use? 
 
-The scripts provided in this repository will compile/download OpenJDK, `cmake` and it will build TornadoVM. 
+The scripts provided in this repository will compile/download OpenJDK, `cmake` and it will build TornadoVM.
 
+All scripts are built for Linux OS. 
 
 To use TornadoVM with OpenJDK 8:
 
