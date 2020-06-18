@@ -30,7 +30,12 @@ git clone --depth 1 https://github.com/beehive-lab/graal-jvmci-8
 cd graal-jvmci-8
 mx build -p
 OPENJDK=`ls | grep jdk`
-export JAVA_HOME=`pwd`/$OPENJDK/linux-amd64/product/
+platform=`uname |tr '[:upper:]' '[:lower:]'`
+if [[ "$platform" == 'linux' ]]; then
+	export JAVA_HOME=`pwd`/$OPENJDK/$platform-amd64/product/
+elif [[ "$platform" == 'darwin' ]]; then
+   export JAVA_HOME=`pwd`/$OPENJDK/$platform-amd64/product/Contents/Home
+fi
 cd -
 
 # 2) Download CMAKE
