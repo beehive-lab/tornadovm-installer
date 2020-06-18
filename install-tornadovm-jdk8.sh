@@ -9,11 +9,16 @@ else
 		exit
 fi
 
+platform=`uname |tr '[:upper:]' '[:lower:]'`
 
 if [ -z "$JAVA_HOME" ];
 then
 	echo "JAVA_HOME is not set. Use OpenJDK 8 >= 141 <= 1.9"
-	echo "\t You can use \`ls -l /etc/alternatives/java\` to get the PATHs"
+	if [[ "$platform" == 'linux' ]]; then
+		echo "\t You can use \`ls -l /etc/alternatives/java\` to get the PATHs"
+	elif [[ "$platform" == 'darwin' ]]; then
+		echo "\t You can use export JAVA_HOME=\$(/usr/libexec/java_home)"
+	fi
  	exit 0
 else
  	echo "JDK Version: OK"
@@ -34,11 +39,23 @@ platform=`uname |tr '[:upper:]' '[:lower:]'`
 if [[ "$platform" == 'linux' ]]; then
 	export JAVA_HOME=`pwd`/$OPENJDK/$platform-amd64/product/
 elif [[ "$platform" == 'darwin' ]]; then
-   export JAVA_HOME=`pwd`/$OPENJDK/$platform-amd64/product/Contents/Home
+	export JAVA_HOME=`pwd`/$OPENJDK/$platform-amd64/product/Contents/Home
 fi
 cd -
 
 # 2) Download CMAKE
+if [[ “$platform” == ‘linux’ ]]; then
+	wget https://github.com/Kitware/CMake/releases/download/v3.18.0-rc2/cmake-3.18.0-rc2-Linux-x86_64.tar.gz
+	tar xzf cmake-3.18.0-rc2-Linux-x86_64.tar.gz
+	export PATH=`pwd`/cmake-3.18.0-rc2-Linux-x86_64/bin:$PATH
+	export CMAKE_ROOT=`pwd`/cmake-3.18.0-rc2-Linux-x86_64/
+elif [[ “$platform” == ‘darwin’ ]]; then
+	wget https://github.com/Kitware/CMake/releases/download/v3.18.0-rc2/cmake-3.18.0-rc2-Darwin-x86_64.tar.gz
+	tar xfz cmake-3.18.0-rc2-Darwin-x86_64.tar.gz
+	export PATH=`pwd`/cmake-3.18.0-rc2-Darwin-x86_64/CMake.app/Contents/bin:$PATH
+	export CMAKE_ROOT=`pwd`/cmake-3.18.0-rc2-Darwin-x86_64/CMake.app/Contents
+fi
+
 wget https://github.com/Kitware/CMake/releases/download/v3.18.0-rc2/cmake-3.18.0-rc2-Linux-x86_64.tar.gz
 tar xzf cmake-3.18.0-rc2-Linux-x86_64.tar.gz
 export PATH=`pwd`/cmake-3.18.0-rc2-Linux-x86_64/bin:$PATH
