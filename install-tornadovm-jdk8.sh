@@ -29,8 +29,7 @@ export PATH=`pwd`/mx:$PATH
 git clone --depth 1 https://github.com/beehive-lab/graal-jvmci-8
 cd graal-jvmci-8
 mx build -p
-DIR=`ls `pwd`openjdk*`
-OPENJDK=`ls | grep openjdk`
+OPENJDK=`ls | grep jdk`
 export JAVA_HOME=`pwd`/$OPENJDK/linux-amd64/product/
 cd -
 
