@@ -57,7 +57,7 @@ echo "Creating Source File ....... "
 	echo "export JAVA_HOME=$JAVA_HOME" > source.sh
 	echo "export PATH=$PWD/bin/bin:\$PATH" >> source.sh
 	echo "export TORNADO_SDK=$PWD/bin/sdk" >> source.sh
-	echo "export CMAKE_ROOT=$PWD/cmake-3.18.0-rc2-Linux-x86_64/" >> source.sh
+	echo "export CMAKE_ROOT=$CMAKE_ROOT" >> source.sh
 	echo "export TORNADO_ROOT=$PWD " >> source.sh
 echo "........................... [OK]"
 

@@ -28,7 +28,7 @@ echo -e "To use TornadoVM, export the following variables:\n"
 	echo "export JAVA_HOME=$JAVA_HOME" > source8.sh
 	echo "export PATH=$PWD/bin/bin:\$PATH" >> source8.sh
 	echo "export TORNADO_SDK=$PWD/bin/sdk" >> source8.sh
-	echo "export CMAKE_ROOT=$PWD/cmake-3.18.0-rc2-Linux-x86_64/" >> source8.sh
+	echo "export CMAKE_ROOT=$CMAKE_ROOT" >> source8.sh
 	echo "export TORNADO_ROOT=$PWD" >> source8.sh 
 
 
