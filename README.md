@@ -5,7 +5,7 @@ Scripts to install [TornadoVM](https://github.com/beehive-lab/TornadoVM/)
 ​
 **Pre-requisites**
 
-* Maven Version 3
+* Maven Version 3.6.3
 * OpenCL: GPUs and CPUs >= 1.2, FPGAs >= 1.0
 * GCC or clang/LLVM (GCC >= 5.5)
 * Python 2.7 (>= 2.7.5)
