@@ -57,7 +57,15 @@ function downloadOpenJDK8() {
     export JDK_BASE=$(pwd)
     git clone --depth 1 https://github.com/beehive-lab/mx
     export PATH=$(pwd)/mx:$PATH
-    git clone --depth 1 https://github.com/beehive-lab/graal-jvmci-8
+    FILE="graal-jvmci-8"
+    if [ -f $FILE ]; then
+        cd graal-jvmci-8
+        mx clean
+        cd - 
+    else 
+        git clone --depth 1 https://github.com/beehive-lab/graal-jvmci-8
+        cd graal-jvmci-8
+    fi
     cd graal-jvmci-8
     mx build -p
     platform=$(getPlatform)
@@ -237,9 +245,8 @@ while [[ $# -gt 0 ]]; do
     shift 
     ;;
   *)
-    installForJDK8
+    printHelp
     shift 
     ;;
   esac
 done
-set -- "${POSITIONAL[@]}" 
