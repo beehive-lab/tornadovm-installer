@@ -10,12 +10,14 @@ echo $platform
 if [[ "$platform" == 'linux' ]]; then	
 	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java8-linux-amd64-19.3.0.tar.gz
 	tar -xf graalvm-ce-java8-linux-amd64-19.3.0.tar.gz
+	JDK_BASE=`pwd`
+	export JAVA_HOME=$PWD/graalvm-ce-java8-19.3.0
 elif [[ "$platform" == 'darwin' ]]; then
 	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java8-darwin-amd64-19.3.0.tar.gz
 	tar -xf graalvm-ce-java8-darwin-amd64-19.3.0.tar.gz
+	JDK_BASE=`pwd`
+	export JAVA_HOME=$PWD/graalvm-ce-java8-19.3.0/Contents/Home/
 fi
-JDK_BASE=`pwd`
-export JAVA_HOME=$PWD/graalvm-ce-java8-19.3.0
 
 # 2) Download CMAKE
 if [[ "$platform" == 'linux' ]]; then
