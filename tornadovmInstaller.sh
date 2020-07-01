@@ -28,7 +28,7 @@ function checkPrerequisites() {
     if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
         echo "GCC Vesion: OK"
     else
-        echo "Less than 5.5.0"
+        echo "Error: GCC Version is less than 5.5.0"
         pass=0
     fi
 
