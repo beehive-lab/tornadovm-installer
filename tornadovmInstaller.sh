@@ -225,6 +225,13 @@ function printHelp() {
 }
 
 POSITIONAL=()
+
+if [[ $# == 0 ]] 
+then
+    printHelp
+    exit
+fi
+
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
@@ -250,3 +257,5 @@ while [[ $# -gt 0 ]]; do
     ;;
   esac
 done
+
+
