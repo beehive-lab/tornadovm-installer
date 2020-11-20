@@ -71,7 +71,7 @@ function downloadOpenJDK8() {
         echo "Downloading JDK8 with JVMCI... ~100MB"
         wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-20.2-b03/openjdk-8u262+10-jvmci-20.2-b03-darwin-amd64.tar.gz
         tar xvzf openjdk-8u262+10-jvmci-20.2-b03-darwin-amd64.tar.gz
-        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_262-jvmci-20.2-b03
+        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_262-jvmci-20.2-b03/Contents/Home/
     else
         echo "OS platform not supported"
         exit 0
