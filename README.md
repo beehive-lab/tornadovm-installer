@@ -23,6 +23,7 @@ Usage:
        --jdk8         : Install TornadoVM with OpenJDK 8  (Default)
        --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8
        --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11
+       --corretto-11  : Install TornadoVM with Corretto JDK 11
        --help         : Print this help
 ```
 
