@@ -44,12 +44,12 @@ function checkPrerequisites() {
     currentver="$(gcc -dumpversion)"
     requiredver="5.5.0"
     pass=1
-    if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
-        echo "GCC Vesion: OK"
-    else
-        echo "Error: GCC Version is less than 5.5.0"
-        pass=0
-    fi
+    # if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
+    #     echo "GCC Vesion: OK"
+    # else
+    #     echo "Error: GCC Version is less than 5.5.0"
+    #     pass=0
+    # fi
 
     #$pass=checkJavaVersion($pass)
 
@@ -101,6 +101,19 @@ function downloadGraalVMJDK11() {
         wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-darwin-amd64-20.2.0.tar.gz
 	    tar -xf graalvm-ce-java11-darwin-amd64-20.2.0.tar.gz
 	    export JAVA_HOME=$PWD/graalvm-ce-java11-20.2.0/Contents/Home/
+    fi
+}
+
+function downloadCorretto11() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.tar.gz
+        tar xf amazon-corretto-11-x64-linux-jdk.tar.gz
+        export JAVA_HOME=$PWD/amazon-corretto-11.0.9.12.1-linux-x64
+    elif [[ "$platform" == 'darwin' ]]; then
+        wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz
+        tar xf amazon-corretto-11-x64-macos-jdk.tar.gz
+        export JAVA_HOME=$PWD/amazon-corretto-11.jdk/Contents/Home
     fi
 }
 
@@ -206,12 +219,24 @@ function installForGraalJDK11() {
     setupVariables $dirname
 }
 
+function installForCorrettoJDK11() {
+    checkPrerequisites
+    dirname="TornadoVM-Amazon-Corretto11"
+    mkdir -p $dirname
+    cd $dirname
+    downloadCorretto11
+    downloadCMake
+    setupTornadoVM jdk-11-plus
+    setupVariables $dirname
+}
+
 function printHelp() {
     echo "TornadoVM installer"
     echo "Usage:"
     echo "       --jdk8         : Install TornadoVM with OpenJDK 8  (Default)"
     echo "       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8"
     echo "       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11"
+    echo "       --corretto-11  : Install TornadoVM with Corretto JDK 11"
     echo "       --help         : Print this help"
     exit 0
 }
@@ -241,6 +266,10 @@ while [[ $# -gt 0 ]]; do
     ;;
   --graal-jdk-11)
     installForGraalJDK11
+    shift 
+    ;;
+  --corretto-11)
+    installForCorrettoJDK11
     shift 
     ;;
   *)
