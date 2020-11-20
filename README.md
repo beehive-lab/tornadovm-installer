@@ -9,8 +9,6 @@ Scripts to install [TornadoVM](https://github.com/beehive-lab/TornadoVM/)
 * OpenCL: GPUs and CPUs >= 1.2, FPGAs >= 1.0
 * GCC or clang/LLVM (GCC >= 5.5)
 * Python 2.7 (>= 2.7.5)
-* JDK 8 >= 1.8.0_141
-
 
 ### How to use? 
 
