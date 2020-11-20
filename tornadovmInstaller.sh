@@ -21,19 +21,9 @@ function getPlatform() {
     echo "$platform"
 }
 
-function checkPrerequisites() {
-    currentver="$(gcc -dumpversion)"
-    requiredver="5.5.0"
-    pass=1
-    if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
-        echo "GCC Vesion: OK"
-    else
-        echo "Error: GCC Version is less than 5.5.0"
-        pass=0
-    fi
-
+function checkJavaVersion() {
     platform=$(getPlatform)
-
+    pass=$1
     if [ -z "$JAVA_HOME" ];
     then
 	    echo "JAVA_HOME is not set. Use OpenJDK 8 >= 141 <= 1.9"
@@ -47,6 +37,22 @@ function checkPrerequisites() {
     else
  	    echo "JDK Version: OK"
     fi
+    return $pass
+}
+
+function checkPrerequisites() {
+    currentver="$(gcc -dumpversion)"
+    requiredver="5.5.0"
+    pass=1
+    if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
+        echo "GCC Vesion: OK"
+    else
+        echo "Error: GCC Version is less than 5.5.0"
+        pass=0
+    fi
+
+    #$pass=checkJavaVersion($pass)
+
     if [[ $pass == 0 ]]; then
         exit
     fi
@@ -55,60 +61,46 @@ function checkPrerequisites() {
 # Download OpenJDK with JVMCI support
 function downloadOpenJDK8() {
     export JDK_BASE=$(pwd)
-    git clone --depth 1 https://github.com/beehive-lab/mx
-    export PATH=$(pwd)/mx:$PATH
-    FILE="graal-jvmci-8"
-    if [ -f $FILE ]; then
-        cd graal-jvmci-8
-        mx clean
-        cd - 
-    else 
-        git clone --depth 1 https://github.com/beehive-lab/graal-jvmci-8
-        cd graal-jvmci-8
-    fi
-    cd graal-jvmci-8
-    mx build -p
     platform=$(getPlatform)
-    export OPENJDK=$(ls | grep jdk)
     if [[ "$platform" == 'linux' ]]; then
-	    export JAVA_HOME=$(pwd)/$OPENJDK/$platform-amd64/product/
+        echo "Downloading JDK8 with JVMCI... ~100MB"
+        wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-20.2-b03/openjdk-8u262+10-jvmci-20.2-b03-linux-amd64.tar.gz
+        tar xvzf openjdk-8u262+10-jvmci-20.2-b03-linux-amd64.tar.gz
+        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_262-jvmci-20.2-b03
     elif [[ "$platform" == 'darwin' ]]; then
-	    export JAVA_HOME=$(pwd)/$OPENJDK/$platform-amd64/product/Contents/Home
+        echo "Downloading JDK8 with JVMCI... ~100MB"
+        wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-20.2-b03/openjdk-8u262+10-jvmci-20.2-b03-darwin-amd64.tar.gz
+        tar xvzf openjdk-8u262+10-jvmci-20.2-b03-darwin-amd64.tar.gz
+        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_262-jvmci-20.2-b03
     else
         echo "OS platform not supported"
-        cd - 
         exit 0
     fi
-    cd -
 }
 
 function downloadGraalVMJDK8() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then	
-    	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java8-linux-amd64-19.3.0.tar.gz
-	    tar -xf graalvm-ce-java8-linux-amd64-19.3.0.tar.gz
-	    JDK_BASE=`pwd`
-	    export JAVA_HOME=$PWD/graalvm-ce-java8-19.3.0
+    	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java8-linux-amd64-20.2.0.tar.gz
+	    tar -xf graalvm-ce-java8-linux-amd64-20.2.0.tar.gz
+	    export JAVA_HOME=$PWD/graalvm-ce-java8-20.2.0
     elif [[ "$platform" == 'darwin' ]]; then
-	    wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java8-darwin-amd64-19.3.0.tar.gz
-	    tar -xf graalvm-ce-java8-darwin-amd64-19.3.0.tar.gz
-	    JDK_BASE=`pwd`
-	export JAVA_HOME=$PWD/graalvm-ce-java8-19.3.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java8-darwin-amd64-20.2.0.tar.gz
+	    tar -xf graalvm-ce-java8-darwin-amd64-20.2.0.tar.gz
+	    export JAVA_HOME=$PWD/graalvm-ce-java8-20.2.0/Contents/Home/
     fi
 }
 
 function downloadGraalVMJDK11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-	    wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java11-linux-amd64-19.3.0.tar.gz
-	    tar -xf graalvm-ce-java11-linux-amd64-19.3.0.tar.gz
-	    JDK_BASE=`pwd`
-	    export JAVA_HOME=$PWD/graalvm-ce-java11-19.3.0
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
+	    tar -xf graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
+	    export JAVA_HOME=$PWD/graalvm-ce-java11-20.2.0
     elif [[ "$platform" == 'darwin' ]]; then
-	    wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java11-darwin-amd64-19.3.0.tar.gz
-	    tar -xf graalvm-ce-java11-darwin-amd64-19.3.0.tar.gz
-	    JDK_BASE=`pwd`
-	    export JAVA_HOME=$PWD/graalvm-ce-java11-19.3.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-darwin-amd64-20.2.0.tar.gz
+	    tar -xf graalvm-ce-java11-darwin-amd64-20.2.0.tar.gz
+	    export JAVA_HOME=$PWD/graalvm-ce-java11-20.2.0/Contents/Home/
     fi
 }
 
@@ -257,5 +249,3 @@ while [[ $# -gt 0 ]]; do
     ;;
   esac
 done
-
-
