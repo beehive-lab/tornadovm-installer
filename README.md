@@ -17,13 +17,13 @@ The scripts provided in this repository will compile/download OpenJDK, `cmake` a
 This installation script has been tested on Linux and OSx. 
 
 ```bash
-$ ./tornadovmInstaller.sh --help
 TornadoVM installer
 Usage:
-       --jdk8         : Install TornadoVM with OpenJDK 8  (Default)
-       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8
-       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11
+       --jdk8         : Install TornadoVM with OpenJDK 8 
+       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8 (GraalVM 20.2.0)
+       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11 (GraalVM 20.2.0)
        --corretto-11  : Install TornadoVM with Corretto JDK 11
+       --mandrel-11   : Install TornadoVM with Mandrel 20.2.0 (JDK 11)
        --help         : Print this help
 ```
 
