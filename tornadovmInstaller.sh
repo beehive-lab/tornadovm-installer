@@ -117,6 +117,18 @@ function downloadCorretto11() {
     fi
 }
 
+function downloadMandrel11() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://github.com/graalvm/mandrel/releases/download/mandrel-20.2.0.0.Final/mandrel-java11-linux-amd64-20.2.0.0.Final.tar.gz
+        tar xf mandrel-java11-linux-amd64-20.2.0.0.Final.tar.gz
+        export JAVA_HOME=$PWD/mandrel-java11-20.2.0.0.Final
+    elif [[ "$platform" == 'darwin' ]]; then
+        echo "OS Not supported"
+        exit 0
+    fi
+}
+
 function downloadCMake01() {
     platform=$1
     if [[ "$platform" == 'linux' ]]; then
@@ -230,13 +242,25 @@ function installForCorrettoJDK11() {
     setupVariables $dirname
 }
 
+function installForMandrelJDK11() {
+    checkPrerequisites
+    dirname="TornadoVM-RedHat-Mandrel11"
+    mkdir -p $dirname
+    cd $dirname
+    downloadMandrel11
+    downloadCMake
+    setupTornadoVM jdk-11-plus
+    setupVariables $dirname
+}
+
 function printHelp() {
     echo "TornadoVM installer"
     echo "Usage:"
     echo "       --jdk8         : Install TornadoVM with OpenJDK 8  (Default)"
-    echo "       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8"
-    echo "       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11"
+    echo "       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8 (GraalVM 20.2.0)"
+    echo "       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11 (GraalVM 20.2.0)"
     echo "       --corretto-11  : Install TornadoVM with Corretto JDK 11"
+    echo "       --mandrel-11   : Install TornadoVM with Mandrel 20.2.0 (JDK 11)"
     echo "       --help         : Print this help"
     exit 0
 }
@@ -271,6 +295,10 @@ while [[ $# -gt 0 ]]; do
   --corretto-11)
     installForCorrettoJDK11
     shift 
+    ;;
+  --mandrel-11)
+    installForMandrelJDK11
+    shift
     ;;
   *)
     printHelp
