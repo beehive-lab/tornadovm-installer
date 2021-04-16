@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#  Copyright (c) 2020, APT Group, Department of Computer Science,
+#  Copyright (c) 2020-2021, APT Group, Department of Computer Science,
 #  The University of Manchester.
 # 
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -129,6 +129,19 @@ function downloadMandrel11() {
     fi
 }
 
+function downloadWindowsJDK11() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.10.9-linux-x64.tar.gz
+        tar xf microsoft-jdk-11.0.10.9-linux-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.10+9
+    elif [[ "$platform" == 'darwin' ]]; then
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.10.9-macos-x64.tar.gz
+        tar xf microsoft-jdk-11.0.10.9-macos-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.10+9/Contents/Home
+    fi
+}
+
 function downloadCMake01() {
     platform=$1
     if [[ "$platform" == 'linux' ]]; then
@@ -253,15 +266,27 @@ function installForMandrelJDK11() {
     setupVariables $dirname
 }
 
+function installForWindowsJDK11() {
+    checkPrerequisites
+    dirname="TornadoVM-Windows-JDK11"
+    mkdir -p $dirname
+    cd $dirname
+    downloadWindowsJDK11
+    downloadCMake
+    setupTornadoVM jdk-11-plus
+    setupVariables $dirname
+}
+
 function printHelp() {
-    echo "TornadoVM installer"
+    echo "TornadoVM installer for Linux and OSx"
     echo "Usage:"
-    echo "       --jdk8         : Install TornadoVM with OpenJDK 8  (Default)"
-    echo "       --graal-jdk-8  : Install TornadoVM with GraalVM and JDK 8 (GraalVM 20.2.0)"
-    echo "       --graal-jdk-11 : Install TornadoVM with GraalVM and JDK 11 (GraalVM 20.2.0)"
-    echo "       --corretto-11  : Install TornadoVM with Corretto JDK 11"
-    echo "       --mandrel-11   : Install TornadoVM with Mandrel 20.2.0 (JDK 11)"
-    echo "       --help         : Print this help"
+    echo "       --jdk8           : Install TornadoVM with OpenJDK 8  (Default)"
+    echo "       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 20.2.0)"
+    echo "       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 20.2.0)"
+    echo "       --corretto-11    : Install TornadoVM with Corretto JDK 11"
+    echo "       --mandrel-11     : Install TornadoVM with Mandrel 20.2.0 (JDK 11)"
+    echo "       --windows-jdk-11 : Install TornadoVM with Windows JDK 11"
+    echo "       --help           : Print this help"
     exit 0
 }
 
@@ -298,6 +323,10 @@ while [[ $# -gt 0 ]]; do
     ;;
   --mandrel-11)
     installForMandrelJDK11
+    shift
+    ;;
+  --windows-jdk-11)
+    installForWindowsJDK11
     shift
     ;;
   *)
