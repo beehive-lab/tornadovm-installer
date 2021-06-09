@@ -65,8 +65,8 @@ function downloadOpenJDK8() {
     if [[ "$platform" == 'linux' ]]; then
         echo "Downloading JDK8 with JVMCI... ~100MB"
         wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-21.1-b05/openjdk-8u292+09-jvmci-21.1-b05-linux-amd64.tar.gz
-        tar xvzf openjdk-8u262+10-jvmci-21.1-b05-linux-amd64.tar.gz
-        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_262-jvmci-21.1-b05
+	tar xvzf openjdk-8u292+09-jvmci-21.1-b05-linux-amd64.tar.gz
+        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_292-jvmci-21.1-b05
     elif [[ "$platform" == 'darwin' ]]; then
         echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.1"
 	exit 0
@@ -119,7 +119,7 @@ function downloadCorretto11() {
     if [[ "$platform" == 'linux' ]]; then
         wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.tar.gz
         tar xf amazon-corretto-11-x64-linux-jdk.tar.gz
-        export JAVA_HOME=$PWD/amazon-corretto-11.9.1-linux-x64
+        export JAVA_HOME=$PWD/amazon-corretto-11.0.11.9.1-linux-x64
     elif [[ "$platform" == 'darwin' ]]; then
 	wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
         tar xf amazon-corretto-11-x64-macos-jdk.tar.gz
@@ -144,8 +144,8 @@ function downloadMandrel11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
         wget https://github.com/graalvm/mandrel/releases/download/mandrel-21.1.0.0-Final/mandrel-java11-linux-amd64-21.1.0.0-Final.tar.gz
-        tar xf mandrel-java11-linux-amd64-21.1.0.0.Final.tar.gz
-        export JAVA_HOME=$PWD/mandrel-java11-21.1.0.0.Final
+        tar xf mandrel-java11-linux-amd64-21.1.0.0-Final.tar.gz
+        export JAVA_HOME=$PWD/mandrel-java11-21.1.0.0-Final
     elif [[ "$platform" == 'darwin' ]]; then
         echo "OS Not supported"
         exit 0
@@ -155,9 +155,9 @@ function downloadMandrel11() {
 function downloadWindowsJDK11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.10.9.1-linux-x64.tar.gz
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.11.9.1-linux-x64.tar.gz 
         tar xf microsoft-jdk-11.0.11.9.1-linux-x64.tar.gz
-        export JAVA_HOME=$PWD/jdk-11.0.11+9.1
+        export JAVA_HOME=$PWD/jdk-11.0.11+9
     elif [[ "$platform" == 'darwin' ]]; then
         wget https://aka.ms/download-jdk/microsoft-jdk-11.0.11.9.1-macOS-x64.tar.gz
 	tar xf microsoft-jdk-11.0.11.9.1-macos-x64.tar.gz        
