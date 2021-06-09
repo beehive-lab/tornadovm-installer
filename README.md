@@ -13,17 +13,21 @@ Script to install [TornadoVM](https://github.com/beehive-lab/TornadoVM/)
 
 The scripts provided in this repository will compile/download OpenJDK, `cmake` and it will build TornadoVM.
 
-This installation script has been tested on Linux and OSx. 
+This installation script has been tested on Linux and OSx.
+Note that GraalVM Community Edition releases based on JDK8 are no longer being built for Mac OSx.
 
 ```bash
 TornadoVM installer for Linux and OSx
 Usage:
        --jdk8           : Install TornadoVM with OpenJDK 8  (Default)
-       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 20.2.0)
-       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 20.2.0)
+       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 21.1.0)
+       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 21.1.0)
+       --graal-jdk-16   : Install TornadoVM with GraalVM and JDK 16 (GraalVM 21.1.0)
        --corretto-11    : Install TornadoVM with Corretto JDK 11
-       --mandrel-11     : Install TornadoVM with Mandrel 20.2.0 (JDK 11)
+       --corretto-16    : Install TornadoVM with Corretto JDK 16
+       --mandrel-11     : Install TornadoVM with Mandrel 21.1.0 (JDK 11)
        --windows-jdk-11 : Install TornadoVM with Windows JDK 11
+       --windows-jdk-16 : Install TornadoVM with Windows JDK 16
        --help           : Print this help
 
 ```
