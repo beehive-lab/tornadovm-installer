@@ -230,7 +230,18 @@ function setupTornadoVM() {
     cd TornadoVM
     export PATH=$PWD/bin/bin:$PATH
     export TORNADO_SDK=$PWD/bin/sdk
-    make $1
+    resolveBackends
+    make $1 $backend
+}
+
+function resolveBackends() {
+    if [[ "$opencl" && "$ptx" ]] ; then
+	backend="BACKEND=opencl,ptx"
+    elif [ "$ptx" ] ; then
+        backend="BACKEND=ptx"
+    else 
+    	backend="BACKEND=opencl"
+    fi 
 }
 
 function setupVariables() {
@@ -358,8 +369,22 @@ function printHelp() {
     echo "       --mandrel-11     : Install TornadoVM with Mandrel 21.1.0 (JDK 11)"
     echo "       --windows-jdk-11 : Install TornadoVM with Windows JDK 11"
     echo "       --windows-jdk-16 : Install TornadoVM with Windows JDK 16"
+    echo "       --opencl         : Install TornadoVM and build the OpenCL backend"
+    echo "       --ptx            : Install TornadoVM and build the PTX backend"
     echo "       --help           : Print this help"
     exit 0
+}
+
+function setBackend() {
+for i in ${args[@]}
+do
+  flag=$i
+  if [[ "$flag" == '--opencl' ]]; then
+    opencl=true
+  elif [[ "$flag" == '--ptx' ]]; then
+    ptx=true
+  fi
+done
 }
 
 POSITIONAL=()
@@ -370,8 +395,13 @@ then
     exit
 fi
 
-while [[ $# -gt 0 ]]; do
-  key="$1"
+args=( "$@" )
+
+setBackend
+
+for i in ${args[@]} 
+do
+  key=$i
   case $key in
   --help)
     printHelp
@@ -411,6 +441,12 @@ while [[ $# -gt 0 ]]; do
     ;;
   --windows-jdk-16)
     installForWindowsJDK16
+    shift
+    ;;
+  --opencl)
+    shift
+    ;;
+  --ptx)
     shift
     ;;
   *)
