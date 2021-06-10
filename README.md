@@ -37,7 +37,7 @@ Usage:
 To use TornadoVM with OpenJDK 8:
 
 ```bash
-./tornadovmInstaller.sh --jk8
+./tornadovmInstaller.sh --jdk8
 # and follow instructions
 ```
 
