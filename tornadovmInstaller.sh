@@ -27,7 +27,7 @@ function checkJavaVersion() {
     if [ -z "$JAVA_HOME" ];
     then
 	    echo "JAVA_HOME is not set. Use OpenJDK 8 >= 141 <= 1.9"
-    	    if [[ "$platform" == 'linux' ]]; then
+    	if [[ "$platform" == 'linux' ]]; then
 	    	# shellcheck disable=SC2028
 	    	echo "\t You can use \`ls -l /etc/alternatives/java\` to get the PATHs"
 	    elif [[ "$platform" == 'darwin' ]]; then
@@ -79,9 +79,9 @@ function downloadOpenJDK8() {
 function downloadGraalVMJDK8() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then	
-    	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java8-linux-amd64-21.1.0.tar.gz
-	    tar -xf graalvm-ce-java8-linux-amd64-21.1.0.tar.gz
-	    export JAVA_HOME=$PWD/graalvm-ce-java8-21.1.0
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java8-linux-amd64-21.1.0.tar.gz
+	tar -xf graalvm-ce-java8-linux-amd64-21.1.0.tar.gz
+	export JAVA_HOME=$PWD/graalvm-ce-java8-21.1.0
     elif [[ "$platform" == 'darwin' ]]; then
         echo "JDK8 for Mac OSx is not supported for Graal 21.1"
 	exit 0
@@ -105,12 +105,12 @@ function downloadGraalVMJDK16() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
         wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java16-linux-amd64-21.1.0.tar.gz
-            tar -xf graalvm-ce-java16-linux-amd64-21.1.0.tar.gz
-            export JAVA_HOME=$PWD/graalvm-ce-java16-21.1.0
+        tar -xf graalvm-ce-java16-linux-amd64-21.1.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java16-21.1.0
     elif [[ "$platform" == 'darwin' ]]; then
         wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java16-darwin-amd64-21.1.0.tar.gz
-            tar -xf graalvm-ce-java16-darwin-amd64-21.1.0.tar.gz
-            export JAVA_HOME=$PWD/graalvm-ce-java16-21.1.0/Contents/Home/
+        tar -xf graalvm-ce-java16-darwin-amd64-21.1.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java16-21.1.0/Contents/Home/
     fi
 }
 
@@ -121,7 +121,7 @@ function downloadCorretto11() {
         tar xf amazon-corretto-11-x64-linux-jdk.tar.gz
         export JAVA_HOME=$PWD/amazon-corretto-11.0.11.9.1-linux-x64
     elif [[ "$platform" == 'darwin' ]]; then
-	wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
+	    wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
         tar xf amazon-corretto-11-x64-macos-jdk.tar.gz
         export JAVA_HOME=$PWD/amazon-corretto-11.jdk/Contents/Home
     fi
