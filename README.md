@@ -28,6 +28,8 @@ Usage:
        --mandrel-11     : Install TornadoVM with Mandrel 21.1.0 (JDK 11)
        --windows-jdk-11 : Install TornadoVM with Windows JDK 11
        --windows-jdk-16 : Install TornadoVM with Windows JDK 16
+       --opencl         : Install TornadoVM and build the OpenCL backend
+       --ptx            : Install TornadoVM and build the PTX backend
        --help           : Print this help
 
 ```
