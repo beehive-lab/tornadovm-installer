@@ -383,6 +383,8 @@ do
     opencl=true
   elif [[ "$flag" == '--ptx' ]]; then
     ptx=true
+  else
+    opencl=true
   fi
 done
 }
