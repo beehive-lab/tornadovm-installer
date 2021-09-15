@@ -68,7 +68,7 @@ function downloadOpenJDK8() {
 	tar xvzf openjdk-8u302+07-jvmci-21.2-b08-linux-amd64.tar.gz
         export JAVA_HOME=$JDK_BASE/openjdk1.8.0_302-jvmci-21.2-b08
     elif [[ "$platform" == 'darwin' ]]; then
-        echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.1"
+        echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.2"
 	exit 0
     else
         echo "OS platform not supported"
@@ -83,7 +83,7 @@ function downloadGraalVMJDK8() {
 	tar -xf graalvm-ce-java8-linux-amd64-21.2.0.tar.gz
 	export JAVA_HOME=$PWD/graalvm-ce-java8-21.2.0
     elif [[ "$platform" == 'darwin' ]]; then
-        echo "JDK8 for Mac OSx is not supported for Graal 21.1"
+        echo "JDK8 for Mac OSx is not supported for Graal 21.2"
 	exit 0
     fi
 }
@@ -95,9 +95,9 @@ function downloadGraalVMJDK11() {
 	tar -xf graalvm-ce-java11-linux-amd64-21.2.0.tar.gz
 	export JAVA_HOME=$PWD/graalvm-ce-java11-21.2.0
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-darwin-amd64-21.1.0.tar.gz
-	    tar -xf graalvm-ce-java11-darwin-amd64-21.1.0.tar.gz
-	    export JAVA_HOME=$PWD/graalvm-ce-java11-21.1.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java11-darwin-amd64-21.2.0.tar.gz
+        tar -xf graalvm-ce-java11-darwin-amd64-21.2.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java11-21.2.0/Contents/Home/
     fi
 }
 
@@ -108,9 +108,9 @@ function downloadGraalVMJDK16() {
         tar -xf graalvm-ce-java16-linux-amd64-21.2.0.tar.gz
         export JAVA_HOME=$PWD/graalvm-ce-java16-21.2.0
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java16-darwin-amd64-21.1.0.tar.gz
-        tar -xf graalvm-ce-java16-darwin-amd64-21.1.0.tar.gz
-        export JAVA_HOME=$PWD/graalvm-ce-java16-21.1.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java16-darwin-amd64-21.2.0.tar.gz
+        tar -xf graalvm-ce-java16-darwin-amd64-21.2.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java16-21.2.0/Contents/Home/
     fi
 }
 
@@ -121,7 +121,7 @@ function downloadCorretto11() {
         tar xf amazon-corretto-11-x64-linux-jdk.tar.gz
         export JAVA_HOME=$PWD/amazon-corretto-11.0.12.7.1-linux-x64
     elif [[ "$platform" == 'darwin' ]]; then
-	    wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
+	wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
         tar xf amazon-corretto-11-x64-macos-jdk.tar.gz
         export JAVA_HOME=$PWD/amazon-corretto-11.jdk/Contents/Home
     fi
@@ -159,9 +159,9 @@ function downloadWindowsJDK11() {
         tar xf microsoft-jdk-11.0.12.7.1-linux-x64.tar.gz
         export JAVA_HOME=$PWD/jdk-11.0.12+7
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.11.9.1-macOS-x64.tar.gz
-	tar xf microsoft-jdk-11.0.11.9.1-macos-x64.tar.gz        
-        export JAVA_HOME=$PWD/jdk-11.0.11+9/Contents/Home
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.12.7.1-macOS-x64.tar.gz
+        tar xf microsoft-jdk-11.0.12.7.1-macos-x64.tar.gz        
+        export JAVA_HOME=$PWD/jdk-11.0.12+7/Contents/Home
     fi
 }
 
@@ -172,9 +172,9 @@ function downloadWindowsJDK16() {
         tar xf microsoft-jdk-16.0.2.7.1-linux-x64.tar.gz
         export JAVA_HOME=$PWD/jdk-16.0.2+7
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-16.0.1.9.1-macos-x64.tar.gz
-        tar xf microsoft-jdk-16.0.1.9.1-macos-x64.tar.gz
-        export JAVA_HOME=$PWD/jdk-16.0.1+9/Contents/Home
+        wget https://aka.ms/download-jdk/microsoft-jdk-16.0.2.7.1-macos-x64.tar.gz
+        tar xf microsoft-jdk-16.0.2.7.1-macos-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-16.0.2+7/Contents/Home
     fi
 }
 
