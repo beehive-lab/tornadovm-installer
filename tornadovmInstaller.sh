@@ -27,7 +27,7 @@ function checkJavaVersion() {
     if [ -z "$JAVA_HOME" ];
     then
 	    echo "JAVA_HOME is not set. Use OpenJDK 8 >= 141 <= 1.9"
-    	if [[ "$platform" == 'linux' ]]; then
+            if [[ "$platform" == 'linux' ]]; then
 	    	# shellcheck disable=SC2028
 	    	echo "\t You can use \`ls -l /etc/alternatives/java\` to get the PATHs"
 	    elif [[ "$platform" == 'darwin' ]]; then
@@ -75,6 +75,32 @@ function downloadOpenJDK8() {
         echo "OS platform not supported"
         cd ../ & rm -rf $dirname
         exit 0
+    fi
+}
+
+function downloadOpenJDK11() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_linux_hotspot_11.0.12_7.tar.gz
+        tar -xf OpenJDK11U-jdk_x64_linux_hotspot_11.0.12_7.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.12+7
+    elif [[ "$platform" == 'darwin' ]]; then
+        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_mac_hotspot_11.0.12_7.tar.gz
+        tar -xf OpenJDK11U-jdk_x64_mac_hotspot_11.0.12_7.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.12+7/Contents/Home/
+    fi
+}
+
+function downloadOpenJDK16() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://github.com/adoptium/temurin16-binaries/releases/download/jdk-16.0.2%2B7/OpenJDK16U-jdk_x64_linux_hotspot_16.0.2_7.tar.gz
+        tar -xf OpenJDK16U-jdk_x64_linux_hotspot_16.0.2_7.tar.gz
+        export JAVA_HOME=$PWD/jdk-16.0.2+7
+    elif [[ "$platform" == 'darwin' ]]; then
+        wget https://github.com/adoptium/temurin16-binaries/releases/download/jdk-16.0.2%2B7/OpenJDK16U-jdk_x64_mac_hotspot_16.0.2_7.tar.gz
+        tar -xf OpenJDK16U-jdk_x64_mac_hotspot_16.0.2_7.tar.gz
+        export JAVA_HOME=$PWD/jdk-16.0.2+7/Contents/Home/
     fi
 }
 
@@ -243,9 +269,11 @@ function resolveBackends() {
 	backend="BACKEND=opencl,ptx"
     elif [ "$ptx" ] ; then
         backend="BACKEND=ptx"
-    else 
-    	backend="BACKEND=opencl"
     fi 
+
+    if [[ "$backend" == '' ]]; then
+	backend="BACKEND=opencl"
+    fi
 }
 
 function setupVariables() {
@@ -262,14 +290,36 @@ function setupVariables() {
     echo "To run TornadoVM, run \`. $DIR/TornadoVM/source.sh\`"
 }
 
-function installForJDK8() {
+function installForOpenJDK8() {
     checkPrerequisites
-    dirname="TornadoVM-JDK8"
+    dirname="TornadoVM-OpenJDK8"
     mkdir -p $dirname
     cd $dirname
     downloadOpenJDK8 
     downloadCMake
     setupTornadoVM 
+    setupVariables $dirname
+}
+
+function installForOpenJDK11() {
+    checkPrerequisites
+    dirname="TornadoVM-OpenJDK11"
+    mkdir -p $dirname
+    cd $dirname
+    downloadOpenJDK11
+    downloadCMake
+    setupTornadoVM jdk-11-plus
+    setupVariables $dirname
+}
+
+function installForOpenJDK16() {
+    checkPrerequisites
+    dirname="TornadoVM-OpenJDK16"
+    mkdir -p $dirname
+    cd $dirname
+    downloadOpenJDK16
+    downloadCMake
+    setupTornadoVM jdk-11-plus
     setupVariables $dirname
 }
 
@@ -365,6 +415,8 @@ function printHelp() {
     echo "TornadoVM installer for Linux and OSx"
     echo "Usage:"
     echo "       --jdk8           : Install TornadoVM with OpenJDK 8  (Default)"
+    echo "       --jdk11          : Install TornadoVM with OpenJDK 11"
+    echo "       --jdk16          : Install TornadoVM with OpenJDK 16"
     echo "       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 21.2.0)"
     echo "       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 21.2.0)"
     echo "       --graal-jdk-16   : Install TornadoVM with GraalVM and JDK 16 (GraalVM 21.2.0)"
@@ -387,8 +439,6 @@ do
     opencl=true
   elif [[ "$flag" == '--ptx' ]]; then
     ptx=true
-  else
-    opencl=true
   fi
 done
 }
@@ -414,7 +464,15 @@ do
     shift
     ;;
   --jdk8)
-    installForJDK8
+    installForOpenJDK8
+    shift
+    ;;
+  --jdk11)
+    installForOpenJDK11
+    shift
+    ;;
+  --jdk16)
+    installForOpenJDK16
     shift
     ;;
   --graal-jdk-8)
