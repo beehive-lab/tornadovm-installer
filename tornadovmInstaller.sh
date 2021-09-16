@@ -69,9 +69,11 @@ function downloadOpenJDK8() {
         export JAVA_HOME=$JDK_BASE/openjdk1.8.0_302-jvmci-21.2-b08
     elif [[ "$platform" == 'darwin' ]]; then
         echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.2"
+        cd ../ && rm -rf $dirname
 	exit 0
     else
         echo "OS platform not supported"
+        cd ../ & rm -rf $dirname
         exit 0
     fi
 }
@@ -84,6 +86,7 @@ function downloadGraalVMJDK8() {
 	export JAVA_HOME=$PWD/graalvm-ce-java8-21.2.0
     elif [[ "$platform" == 'darwin' ]]; then
         echo "JDK8 for Mac OSx is not supported for Graal 21.2"
+        cd ../ && rm -rf $dirname
 	exit 0
     fi
 }
@@ -148,6 +151,7 @@ function downloadMandrel11() {
         export JAVA_HOME=$PWD/mandrel-java11-21.2.0.0-Final
     elif [[ "$platform" == 'darwin' ]]; then
         echo "OS Not supported"
+        cd ../ && rm -rf $dirname
         exit 0
     fi
 }
