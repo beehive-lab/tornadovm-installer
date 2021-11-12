@@ -265,10 +265,18 @@ function setupTornadoVM() {
 }
 
 function resolveBackends() {
-    if [[ "$opencl" && "$ptx" ]] ; then
-	backend="BACKEND=opencl,ptx"
+    if [[ "$opencl" && "$ptx" && "$spirv" ]] ; then
+        backend="BACKENDS=opencl,ptx,spirv"    
+    elif [[ "$opencl" && "$ptx" ]] ; then
+	backend="BACKENDS=opencl,ptx"
+    elif [[ "$opencl" && "$spirv" ]] ; then
+        backend="BACKENDS=opencl,spirv"
+    elif [[ "$spirv" && "$ptx" ]] ; then
+        backend="BACKENDS=ptx,spirv"
     elif [ "$ptx" ] ; then
         backend="BACKEND=ptx"
+    elif [ "$spirv" ] ; then
+        backend="BACKEND=spirv"
     fi 
 
     if [[ "$backend" == '' ]]; then
@@ -427,6 +435,7 @@ function printHelp() {
     echo "       --windows-jdk-16 : Install TornadoVM with Windows JDK 16"
     echo "       --opencl         : Install TornadoVM and build the OpenCL backend"
     echo "       --ptx            : Install TornadoVM and build the PTX backend"
+    echo "       --spirv          : Install TornadoVM and build the SPIR-V backend"
     echo "       --help           : Print this help"
     exit 0
 }
@@ -439,6 +448,8 @@ do
     opencl=true
   elif [[ "$flag" == '--ptx' ]]; then
     ptx=true
+  elif [[ "$flag" == '--spirv' ]]; then
+    spirv=true
   fi
 done
 }
@@ -511,6 +522,9 @@ do
     shift
     ;;
   --ptx)
+    shift
+    ;;
+  --spirv)
     shift
     ;;
   *)
