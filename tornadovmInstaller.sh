@@ -265,23 +265,21 @@ function setupTornadoVM() {
 }
 
 function resolveBackends() {
-    if [[ "$opencl" && "$ptx" && "$spirv" ]] ; then
-        backend="BACKENDS=opencl,ptx,spirv"    
-    elif [[ "$opencl" && "$ptx" ]] ; then
-	backend="BACKENDS=opencl,ptx"
-    elif [[ "$opencl" && "$spirv" ]] ; then
-        backend="BACKENDS=opencl,spirv"
-    elif [[ "$spirv" && "$ptx" ]] ; then
-        backend="BACKENDS=ptx,spirv"
-    elif [ "$ptx" ] ; then
-        backend="BACKEND=ptx"
-    elif [ "$spirv" ] ; then
-        backend="BACKEND=spirv"
-    fi 
-
-    if [[ "$backend" == '' ]]; then
-	backend="BACKEND=opencl"
+    if [ $opencl ]; then
+        b="${b}opencl,"
     fi
+
+    if [ $ptx ]; then
+        b="${b}ptx,"
+    fi
+
+    if [ $spirv ]; then
+        b="${b}spirv,"
+    fi
+
+    # Remove last comma
+    b=${b%?}
+    backend="BACKEND=$b"
 }
 
 function setupVariables() {
