@@ -19,7 +19,7 @@ Note that GraalVM Community Edition releases based on JDK8 are no longer being b
 ```bash
 TornadoVM installer for Linux and OSx
 Usage:
-       --jdk8           : Install TornadoVM with OpenJDK 8  (Default)
+       --jdk8           : Install TornadoVM with OpenJDK 8
        --jdk11          : Install TornadoVM with OpenJDK 11
        --jdk16          : Install TornadoVM with OpenJDK 16
        --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 21.1.0)
