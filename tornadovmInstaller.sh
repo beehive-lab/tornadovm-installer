@@ -422,7 +422,7 @@ function installForWindowsJDK16() {
 function printHelp() {
     echo "TornadoVM installer for Linux and OSx"
     echo "Usage:"
-    echo "       --jdk8           : Install TornadoVM with OpenJDK 8  (Default)"
+    echo "       --jdk8           : Install TornadoVM with OpenJDK 8"
     echo "       --jdk11          : Install TornadoVM with OpenJDK 11"
     echo "       --jdk16          : Install TornadoVM with OpenJDK 16"
     echo "       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 21.2.0)"
