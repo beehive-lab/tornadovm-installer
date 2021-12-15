@@ -68,7 +68,7 @@ function downloadOpenJDK8() {
 	tar xvzf openjdk-8u302+07-jvmci-21.2-b08-linux-amd64.tar.gz
         export JAVA_HOME=$JDK_BASE/openjdk1.8.0_302-jvmci-21.2-b08
     elif [[ "$platform" == 'darwin' ]]; then
-        echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.2"
+        echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.3"
         cd ../ && rm -rf $dirname
 	exit 0
     else
@@ -91,55 +91,42 @@ function downloadOpenJDK11() {
     fi
 }
 
-function downloadOpenJDK16() {
+function downloadOpenJDK17() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://github.com/adoptium/temurin16-binaries/releases/download/jdk-16.0.2%2B7/OpenJDK16U-jdk_x64_linux_hotspot_16.0.2_7.tar.gz
-        tar -xf OpenJDK16U-jdk_x64_linux_hotspot_16.0.2_7.tar.gz
-        export JAVA_HOME=$PWD/jdk-16.0.2+7
+        wget https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/openjdk-17.0.1_linux-x64_bin.tar.gz
+        tar -xf openjdk-17.0.1_linux-x64_bin.tar.gz
+        export JAVA_HOME=$PWD/jdk-17.0.1
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/adoptium/temurin16-binaries/releases/download/jdk-16.0.2%2B7/OpenJDK16U-jdk_x64_mac_hotspot_16.0.2_7.tar.gz
-        tar -xf OpenJDK16U-jdk_x64_mac_hotspot_16.0.2_7.tar.gz
-        export JAVA_HOME=$PWD/jdk-16.0.2+7/Contents/Home/
-    fi
-}
-
-function downloadGraalVMJDK8() {
-    platform=$(getPlatform)
-    if [[ "$platform" == 'linux' ]]; then	
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java8-linux-amd64-21.2.0.tar.gz
-	tar -xf graalvm-ce-java8-linux-amd64-21.2.0.tar.gz
-	export JAVA_HOME=$PWD/graalvm-ce-java8-21.2.0
-    elif [[ "$platform" == 'darwin' ]]; then
-        echo "JDK8 for Mac OSx is not supported for Graal 21.2"
-        cd ../ && rm -rf $dirname
-	exit 0
+        wget https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/openjdk-17.0.1_macos-x64_bin.tar.gz
+        tar -xf openjdk-17.0.1_macos-x64_bin.tar.gz
+        export JAVA_HOME=$PWD/jdk-17.0.1/Contents/Home/
     fi
 }
 
 function downloadGraalVMJDK11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java11-linux-amd64-21.2.0.tar.gz
-	tar -xf graalvm-ce-java11-linux-amd64-21.2.0.tar.gz
-	export JAVA_HOME=$PWD/graalvm-ce-java11-21.2.0
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java11-linux-amd64-21.3.0.tar.gz
+	tar -xf graalvm-ce-java11-linux-amd64-21.3.0.tar.gz
+	export JAVA_HOME=$PWD/graalvm-ce-java11-21.3.0
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java11-darwin-amd64-21.2.0.tar.gz
-        tar -xf graalvm-ce-java11-darwin-amd64-21.2.0.tar.gz
-        export JAVA_HOME=$PWD/graalvm-ce-java11-21.2.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java11-darwin-amd64-21.3.0.tar.gz
+        tar -xf graalvm-ce-java11-darwin-amd64-21.3.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java11-21.3.0/Contents/Home/
     fi
 }
 
-function downloadGraalVMJDK16() {
+function downloadGraalVMJDK17() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java16-linux-amd64-21.2.0.tar.gz
-        tar -xf graalvm-ce-java16-linux-amd64-21.2.0.tar.gz
-        export JAVA_HOME=$PWD/graalvm-ce-java16-21.2.0
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java17-linux-amd64-21.3.0.tar.gz
+        tar -xf graalvm-ce-java17-linux-amd64-21.3.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java17-21.3.0
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.2.0/graalvm-ce-java16-darwin-amd64-21.2.0.tar.gz
-        tar -xf graalvm-ce-java16-darwin-amd64-21.2.0.tar.gz
-        export JAVA_HOME=$PWD/graalvm-ce-java16-21.2.0/Contents/Home/
+        wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.3.0/graalvm-ce-java17-darwin-amd64-21.3.0.tar.gz
+        tar -xf graalvm-ce-java17-darwin-amd64-21.3.0.tar.gz
+        export JAVA_HOME=$PWD/graalvm-ce-java16-21.3.0/Contents/Home/
     fi
 }
 
@@ -148,7 +135,7 @@ function downloadCorretto11() {
     if [[ "$platform" == 'linux' ]]; then
         wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.tar.gz
         tar xf amazon-corretto-11-x64-linux-jdk.tar.gz
-        export JAVA_HOME=$PWD/amazon-corretto-11.0.12.7.1-linux-x64
+        export JAVA_HOME=$PWD/amazon-corretto-11.0.13.8.1-linux-x64/
     elif [[ "$platform" == 'darwin' ]]; then
 	wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.tar.gz        
         tar xf amazon-corretto-11-x64-macos-jdk.tar.gz
@@ -156,25 +143,38 @@ function downloadCorretto11() {
     fi
 }
 
-function downloadCorretto16() {
+function downloadCorretto17() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://corretto.aws/downloads/latest/amazon-corretto-16-x64-linux-jdk.tar.gz
-        tar xf amazon-corretto-16-x64-linux-jdk.tar.gz
-        export JAVA_HOME=$PWD/amazon-corretto-16.0.2.7.1-linux-x64
+        wget https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
+        tar xf amazon-corretto-17-x64-linux-jdk.tar.gz
+        export JAVA_HOME=$PWD/amazon-corretto-17.0.1.12.1-linux-x64
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://corretto.aws/downloads/latest/amazon-corretto-16-x64-macos-jdk.tar.gz
-        tar xf amazon-corretto-16-x64-macos-jdk.tar.gz
-        export JAVA_HOME=$PWD/amazon-corretto-16.jdk/Contents/Home
+        wget https://corretto.aws/downloads/latest/amazon-corretto-17-x64-macos-jdk.tar.gz
+        tar xf amazon-corretto-17-x64-macos-jdk.tar.gz
+        export JAVA_HOME=$PWD/amazon-corretto-17.jdk/Contents/Home
     fi
 }
 
 function downloadMandrel11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://github.com/graalvm/mandrel/releases/download/mandrel-21.2.0.0-Final/mandrel-java11-linux-amd64-21.2.0.0-Final.tar.gz
-        tar xf mandrel-java11-linux-amd64-21.2.0.0-Final.tar.gz
-        export JAVA_HOME=$PWD/mandrel-java11-21.2.0.0-Final
+        wget https://github.com/graalvm/mandrel/releases/download/mandrel-21.3.0.0-Final/mandrel-java11-linux-amd64-21.3.0.0-Final.tar.gz
+        tar xf mandrel-java11-linux-amd64-21.3.0.0-Final.tar.gz
+        export JAVA_HOME=$PWD/mandrel-java11-21.3.0.0-Final
+    elif [[ "$platform" == 'darwin' ]]; then
+        echo "OS Not supported"
+        cd ../ && rm -rf $dirname
+        exit 0
+    fi
+}
+
+function downloadMandrel17() {
+    platform=$(getPlatform)
+    if [[ "$platform" == 'linux' ]]; then
+        wget https://github.com/graalvm/mandrel/releases/download/mandrel-21.3.0.0-Final/mandrel-java17-linux-amd64-21.3.0.0-Final.tar.gz
+        tar xf mandrel-java17-linux-amd64-21.3.0.0-Final.tar.gz
+        export JAVA_HOME=$PWD/mandrel-java17-21.3.0.0-Final
     elif [[ "$platform" == 'darwin' ]]; then
         echo "OS Not supported"
         cd ../ && rm -rf $dirname
@@ -185,26 +185,26 @@ function downloadMandrel11() {
 function downloadWindowsJDK11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.12.7.1-linux-x64.tar.gz 
-        tar xf microsoft-jdk-11.0.12.7.1-linux-x64.tar.gz
-        export JAVA_HOME=$PWD/jdk-11.0.12+7
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.13.8.1-linux-x64.tar.gz
+        tar xf microsoft-jdk-11.0.13.8.1-linux-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.13+8
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.12.7.1-macOS-x64.tar.gz
+        wget https://aka.ms/download-jdk/microsoft-jdk-11.0.13.8.1-macOS-x64.tar.gz
         tar xf microsoft-jdk-11.0.12.7.1-macos-x64.tar.gz        
         export JAVA_HOME=$PWD/jdk-11.0.12+7/Contents/Home
     fi
 }
 
-function downloadWindowsJDK16() {
+function downloadWindowsJDK17() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-16.0.2.7.1-linux-x64.tar.gz
-        tar xf microsoft-jdk-16.0.2.7.1-linux-x64.tar.gz
-        export JAVA_HOME=$PWD/jdk-16.0.2+7
+        wget https://aka.ms/download-jdk/microsoft-jdk-17.0.1.12.1-linux-x64.tar.gz
+        tar xf microsoft-jdk-17.0.1.12.1-linux-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-17.0.1+12
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://aka.ms/download-jdk/microsoft-jdk-16.0.2.7.1-macos-x64.tar.gz
-        tar xf microsoft-jdk-16.0.2.7.1-macos-x64.tar.gz
-        export JAVA_HOME=$PWD/jdk-16.0.2+7/Contents/Home
+        wget https://aka.ms/download-jdk/microsoft-jdk-17.0.1.12.1-macOS-x64.tar.gz
+        tar xf microsoft-jdk-11.0.13.8.1-macOS-x64.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.13+8/Contents/Home
     fi
 }
 
@@ -318,25 +318,14 @@ function installForOpenJDK11() {
     setupVariables $dirname
 }
 
-function installForOpenJDK16() {
+function installForOpenJDK17() {
     checkPrerequisites
-    dirname="TornadoVM-OpenJDK16"
+    dirname="TornadoVM-OpenJDK17"
     mkdir -p $dirname
     cd $dirname
-    downloadOpenJDK16
+    downloadOpenJDK17
     downloadCMake
     setupTornadoVM jdk-11-plus
-    setupVariables $dirname
-}
-
-function installForGraalJDK8() {
-    checkPrerequisites
-    dirname="TornadoVM-GraalJDK8"
-    mkdir -p $dirname
-    cd $dirname
-    downloadGraalVMJDK8
-    downloadCMake
-    setupTornadoVM graal-jdk-8
     setupVariables $dirname
 }
 
@@ -351,12 +340,12 @@ function installForGraalJDK11() {
     setupVariables $dirname
 }
 
-function installForGraalJDK16() {
+function installForGraalJDK17() {
     checkPrerequisites
-    dirname="TornadoVM-GraalJDK16"
+    dirname="TornadoVM-GraalJDK17"
     mkdir -p $dirname
     cd $dirname
-    downloadGraalVMJDK16
+    downloadGraalVMJDK17
     downloadCMake
     setupTornadoVM graal-jdk-11-plus
     setupVariables $dirname
@@ -373,12 +362,12 @@ function installForCorrettoJDK11() {
     setupVariables $dirname
 }
 
-function installForCorrettoJDK16() {
+function installForCorrettoJDK17() {
     checkPrerequisites
-    dirname="TornadoVM-Amazon-Corretto16"
+    dirname="TornadoVM-Amazon-Corretto17"
     mkdir -p $dirname
     cd $dirname
-    downloadCorretto16
+    downloadCorretto17
     downloadCMake
     setupTornadoVM jdk-11-plus
     setupVariables $dirname
@@ -395,6 +384,17 @@ function installForMandrelJDK11() {
     setupVariables $dirname
 }
 
+function installForMandrelJDK17() {
+    checkPrerequisites
+    dirname="TornadoVM-RedHat-Mandrel17"
+    mkdir -p $dirname
+    cd $dirname
+    downloadMandrel17
+    downloadCMake
+    setupTornadoVM jdk-11-plus
+    setupVariables $dirname
+}
+
 function installForWindowsJDK11() {
     checkPrerequisites
     dirname="TornadoVM-Windows-JDK11"
@@ -406,12 +406,12 @@ function installForWindowsJDK11() {
     setupVariables $dirname
 }
 
-function installForWindowsJDK16() {
+function installForWindowsJDK17() {
     checkPrerequisites
-    dirname="TornadoVM-Windows-JDK16"
+    dirname="TornadoVM-Windows-JDK17"
     mkdir -p $dirname
     cd $dirname
-    downloadWindowsJDK16
+    downloadWindowsJDK17
     downloadCMake
     setupTornadoVM jdk-11-plus
     setupVariables $dirname
@@ -422,15 +422,15 @@ function printHelp() {
     echo "Usage:"
     echo "       --jdk8           : Install TornadoVM with OpenJDK 8"
     echo "       --jdk11          : Install TornadoVM with OpenJDK 11"
-    echo "       --jdk16          : Install TornadoVM with OpenJDK 16"
-    echo "       --graal-jdk-8    : Install TornadoVM with GraalVM and JDK 8 (GraalVM 21.2.0)"
-    echo "       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 21.2.0)"
-    echo "       --graal-jdk-16   : Install TornadoVM with GraalVM and JDK 16 (GraalVM 21.2.0)"
+    echo "       --jdk17          : Install TornadoVM with OpenJDK 17"
+    echo "       --graal-jdk-11   : Install TornadoVM with GraalVM and JDK 11 (GraalVM 21.3.0)"
+    echo "       --graal-jdk-17   : Install TornadoVM with GraalVM and JDK 16 (GraalVM 21.3.0)"
     echo "       --corretto-11    : Install TornadoVM with Corretto JDK 11"
-    echo "       --corretto-16    : Install TornadoVM with Corretto JDK 16"
-    echo "       --mandrel-11     : Install TornadoVM with Mandrel 21.2.0 (JDK 11)"
+    echo "       --corretto-17    : Install TornadoVM with Corretto JDK 16"
+    echo "       --mandrel-11     : Install TornadoVM with Mandrel 21.3.0 (JDK 11)"
+    echo "       --mandrel-17     : Install TornadoVM with Mandrel 21.3.0 (JDK 17)"
     echo "       --windows-jdk-11 : Install TornadoVM with Windows JDK 11"
-    echo "       --windows-jdk-16 : Install TornadoVM with Windows JDK 16"
+    echo "       --windows-jdk-17 : Install TornadoVM with Windows JDK 16"
     echo "       --opencl         : Install TornadoVM and build the OpenCL backend"
     echo "       --ptx            : Install TornadoVM and build the PTX backend"
     echo "       --spirv          : Install TornadoVM and build the SPIR-V backend"
@@ -480,40 +480,40 @@ do
     installForOpenJDK11
     shift
     ;;
-  --jdk16)
-    installForOpenJDK16
+  --jdk17)
+    installForOpenJDK17
     shift
-    ;;
-  --graal-jdk-8)
-    installForGraalJDK8
-    shift 
     ;;
   --graal-jdk-11)
     installForGraalJDK11
     shift 
     ;;
-  --graal-jdk-16)
-    installForGraalJDK16
+  --graal-jdk-17)
+    installForGraalJDK17
     shift
     ;;
   --corretto-11)
     installForCorrettoJDK11
     shift 
     ;;
-  --corretto-16)
-    installForCorrettoJDK16
+  --corretto-17)
+    installForCorrettoJDK17
     shift
     ;;
   --mandrel-11)
     installForMandrelJDK11
     shift
     ;;
+  --mandrel-17)
+    installForMandrelJDK17
+    shift
+    ;;
   --windows-jdk-11)
     installForWindowsJDK11
     shift
     ;;
-  --windows-jdk-16)
-    installForWindowsJDK16
+  --windows-jdk-17)
+    installForWindowsJDK17
     shift
     ;;
   --opencl)
