@@ -64,9 +64,9 @@ function downloadOpenJDK8() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
         echo "Downloading JDK8 with JVMCI... ~100MB"
-        wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-21.2-b08/openjdk-8u302+07-jvmci-21.2-b08-linux-amd64.tar.gz 
-	tar xvzf openjdk-8u302+07-jvmci-21.2-b08-linux-amd64.tar.gz
-        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_302-jvmci-21.2-b08
+        wget https://github.com/graalvm/graal-jvmci-8/releases/download/jvmci-21.3-b05/openjdk-8u302+06-jvmci-21.3-b05-linux-amd64.tar.gz
+	    tar xvzf openjdk-8u302+06-jvmci-21.3-b05-linux-amd64.tar.gz
+        export JAVA_HOME=$JDK_BASE/openjdk1.8.0_302-jvmci-21.3-b05
     elif [[ "$platform" == 'darwin' ]]; then
         echo "JDK8 with JVMCI for Mac OSx is not supported for Graal 21.3"
         cd ../ && rm -rf $dirname
@@ -81,13 +81,13 @@ function downloadOpenJDK8() {
 function downloadOpenJDK11() {
     platform=$(getPlatform)
     if [[ "$platform" == 'linux' ]]; then
-        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_linux_hotspot_11.0.12_7.tar.gz
-        tar -xf OpenJDK11U-jdk_x64_linux_hotspot_11.0.12_7.tar.gz
-        export JAVA_HOME=$PWD/jdk-11.0.12+7
+        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
+        tar -xf OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.13+8
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_mac_hotspot_11.0.12_7.tar.gz
-        tar -xf OpenJDK11U-jdk_x64_mac_hotspot_11.0.12_7.tar.gz
-        export JAVA_HOME=$PWD/jdk-11.0.12+7/Contents/Home/
+        wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jdk_x64_mac_hotspot_11.0.13_8.tar.gz
+        tar -xf OpenJDK11U-jdk_x64_mac_hotspot_11.0.13_8.tar.gz
+        export JAVA_HOME=$PWD/jdk-11.0.13+8/Contents/Home/
     fi
 }
 
@@ -211,9 +211,9 @@ function downloadWindowsJDK17() {
 function downloadCMake01() {
     platform=$1
     if [[ "$platform" == 'linux' ]]; then
-	    wget https://github.com/Kitware/CMake/releases/download/v3.18.0-rc2/cmake-3.18.0-rc2-Linux-x86_64.tar.gz
+	    wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.tar.gz
     elif [[ "$platform" == 'darwin' ]]; then
-        wget https://github.com/Kitware/CMake/releases/download/v3.18.0-rc2/cmake-3.18.0-rc2-Darwin-x86_64.tar.gz
+        wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-macos-universal.tar.gz
     else 
         echo "OS platform not supported"
         exit 0
@@ -223,13 +223,13 @@ function downloadCMake01() {
 function unZipAndSetCmake() {
     platform=$1
     if [[ "$platform" == 'linux' ]]; then
-        tar xzf cmake-3.18.0-rc2-Linux-x86_64.tar.gz
-        export PATH=`pwd`/cmake-3.18.0-rc2-Linux-x86_64/bin:$PATH
-        export CMAKE_ROOT=`pwd`/cmake-3.18.0-rc2-Linux-x86_64/
+        tar xzf cmake-3.22.1-linux-x86_64.tar.gz
+        export PATH=`pwd`/cmake-3.22.1-linux-x86_64/bin:$PATH
+        export CMAKE_ROOT=`pwd`/cmake-3.22.1-linux-x86_64/
     elif [[ "$platform" == 'darwin' ]]; then
-        tar xfz cmake-3.18.0-rc2-Darwin-x86_64.tar.gz
-        export PATH=`pwd`/cmake-3.18.0-rc2-Darwin-x86_64/CMake.app/Contents/bin:$PATH
-        export CMAKE_ROOT=`pwd`/cmake-3.18.0-rc2-Darwin-x86_64/CMake.app/Contents
+        tar xfz cmake-3.22.1-macos-universal.tar.gz
+        export PATH=`pwd`/cmake-3.22.1-macos-universal/CMake.app/Contents/bin:$PATH
+        export CMAKE_ROOT=`pwd`/cmake-3.22.1-macos-universal/CMake.app/Contents
     else 
         echo "OS platform not supported"
         exit 0
@@ -239,7 +239,7 @@ function unZipAndSetCmake() {
 # Download CMAKE
 function downloadCMake() {
     platform=$(getPlatform)
-    FILE="cmake-3.18.0-rc2-Linux-x86_64.tar.gz"
+    FILE="cmake-3.22.1-linux-x86_64.tar.gz"
     if [ ! -f "$FILE" ]; then
         downloadCMake01 $platform
         unZipAndSetCmake $platform
@@ -303,7 +303,7 @@ function installForOpenJDK8() {
     cd $dirname
     downloadOpenJDK8 
     downloadCMake
-    setupTornadoVM 
+    setupTornadoVM jdk-8
     setupVariables $dirname
 }
 
